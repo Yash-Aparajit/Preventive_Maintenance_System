@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+    <h2>Export Assets</h2>
+</div>
+
+<div class="card">
+    <p>This will export all assets in Excel format.</p>
+    <a class="btn btn-primary" href="{{ url_for('asset_export') }}">Download Excel</a>
+</div>
+
+{% endblock %}
