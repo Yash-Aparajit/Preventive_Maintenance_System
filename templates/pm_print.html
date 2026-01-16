@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>PM Week {{ week }}</title>
+    <style>
+        body { font-family: Arial; }
+        table { width:100%; border-collapse: collapse; }
+        th, td { border:1px solid #000; padding:6px; }
+    </style>
+</head>
+<body>
+
+<h3>PM WEEK {{ week }}</h3>
+
+<table>
+<tr>
+    <th>Asset ID</th>
+    <th>Asset Name</th>
+    <th>Type</th>
+    <th>Group</th>
+    <th>PM Done</th>
+</tr>
+
+{% for a in assets %}
+<tr>
+    <td>{{ a.asset_id }}</td>
+    <td>{{ a.asset_name }}</td>
+    <td>{{ a.asset_type }}</td>
+    <td>{{ a.rotation_slot }}</td>
+    <td>☐</td>
+</tr>
+{% endfor %}
+</table>
+
+</body>
+</html>
