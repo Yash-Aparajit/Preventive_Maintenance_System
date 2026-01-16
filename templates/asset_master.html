@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="page-header">
+    <h2>Asset Master</h2>
+    <a class="btn" href="{{ url_for('asset_add') }}">+ Add Asset</a>
+</div>
+
+<table>
+<tr>
+    <th>ID</th><th>Name</th><th>Type</th><th>Slot</th><th>Status</th><th></th>
+</tr>
+{% for a in assets %}
+<tr>
+    <td>{{ a.asset_id }}</td>
+    <td>{{ a.asset_name }}</td>
+    <td>{{ a.asset_type }}</td>
+    <td>{{ a.rotation_slot }}</td>
+    <td>{{ a.status }}</td>
+    <td><a href="{{ url_for('asset_edit', id=a.id) }}">Edit</a></td>
+</tr>
+{% endfor %}
+</table>
+
+{% endblock %}
