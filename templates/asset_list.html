@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card page-header">
+    <h2>Asset Master</h2>
+    <a class="btn btn-primary" href="{{ url_for('asset_add') }}">+ Add Asset</a>
+</div>
+
+<div class="card">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Asset ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Rotation</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for a in assets %}
+            <tr>
+                <td>{{ a.asset_id }}</td>
+                <td>{{ a.asset_name }}</td>
+                <td>
+                    <span class="pill pill-blue">{{ a.asset_type }}</span>
+                </td>
+                <td>{{ a.rotation_slot }}</td>
+                <td>
+                    <span class="pill pill-green">{{ a.status }}</span>
+                </td>
+                <td>
+                    <a class="btn btn-secondary" href="{{ url_for('asset_edit', id=a.id) }}">Edit</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+{% endblock %}
