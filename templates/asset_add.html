@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+    <h2>Add Asset</h2>
+</div>
+
+<div class="card">
+    <form method="post">
+        <div class="form-row">
+            <label>Asset ID</label>
+            <input name="asset_id" required>
+        </div>
+
+        <div class="form-row">
+            <label>Asset Name</label>
+            <input name="asset_name" required>
+        </div>
+
+        <div class="form-row">
+            <label>Asset Type</label>
+            <select name="asset_type" required>
+                <option>Machine</option>
+                <option>Nut Runner</option>
+                <option>Trolley</option>
+                <option>Fixture</option>
+            </select>
+        </div>
+
+        <button class="btn btn-primary">Save Asset</button>
+    </form>
+</div>
+
+{% endblock %}
