@@ -1,0 +1,135 @@
+/* ---------- GLOBAL ---------- */
+body {
+    margin: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: #f4f6f8;
+    color: #333;
+}
+
+a { text-decoration: none; color: inherit; }
+
+h2 { margin: 0; }
+
+/* ---------- TOP BAR ---------- */
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 20px;
+    background: #ffffff;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.nav-links a {
+    margin-right: 16px;
+    font-weight: 500;
+    color: #333;
+}
+
+.nav-links .disabled {
+    color: #aaa;
+    cursor: not-allowed;
+}
+
+.user-box {
+    font-size: 14px;
+}
+
+/* ---------- PAGE ---------- */
+.content {
+    padding: 20px;
+}
+
+/* ---------- CARDS ---------- */
+.card {
+    background: #fff;
+    border-radius: 6px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+/* ---------- HEADER ROW ---------- */
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* ---------- BUTTONS ---------- */
+.btn {
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.btn-primary {
+    background: #0d6efd;
+    color: #fff;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: #fff;
+}
+
+/* ---------- PILLS ---------- */
+.pill {
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    display: inline-block;
+}
+
+.pill-blue { background: #e7f1ff; color: #0d6efd; }
+.pill-green { background: #e6f4ea; color: #198754; }
+.pill-grey { background: #e9ecef; color: #495057; }
+
+/* ---------- TABLE ---------- */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table th {
+    text-align: left;
+    font-size: 12px;
+    text-transform: uppercase;
+    color: #666;
+    border-bottom: 1px solid #ddd;
+    padding: 8px;
+}
+
+.table td {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+}
+
+/* ---------- FORMS ---------- */
+.form-row {
+    margin-bottom: 12px;
+}
+
+label {
+    font-size: 13px;
+    color: #555;
+    display: block;
+    margin-bottom: 4px;
+}
+
+input, select {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
