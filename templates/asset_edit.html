@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card">
+    <h2>Edit Asset</h2>
+</div>
+
+<div class="card">
+    <form method="post">
+        <p><b>Asset ID:</b> {{ asset.asset_id }}</p>
+        <p>
+            <b>Status:</b>
+            <span class="pill pill-green">{{ asset.status }}</span>
+        </p>
+
+        <div class="form-row">
+            <label>Asset Name</label>
+            <input name="asset_name" value="{{ asset.asset_name }}" required>
+        </div>
+
+        <div class="form-row">
+            <label>Asset Type</label>
+            <select name="asset_type" required>
+                <option {{ 'selected' if asset.asset_type=='Machine' }}>Machine</option>
+                <option {{ 'selected' if asset.asset_type=='Nut Runner' }}>Nut Runner</option>
+                <option {{ 'selected' if asset.asset_type=='Trolley' }}>Trolley</option>
+                <option {{ 'selected' if asset.asset_type=='Fixture' }}>Fixture</option>
+            </select>
+        </div>
+
+        <button class="btn btn-primary">Update Asset</button>
+    </form>
+</div>
+
+{% endblock %}
