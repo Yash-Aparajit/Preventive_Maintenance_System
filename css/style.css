@@ -1,100 +1,200 @@
-/* ---------- GLOBAL ---------- */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* =====================
+   DESIGN TOKENS (REFINED)
+===================== */
+:root {
+    --bg: #eef2f7;              /* less white, more surface */
+    --card: #fbfcfe;            /* soft white */
+    --card-alt: #f4f7fb;
+    --text: #1f2937;
+    --muted: #5f6b7a;
+    --border: #dce3ec;
+
+    --primary: #2563eb;
+    --primary-soft: #e8efff;
+
+    --success: #16a34a;
+    --success-soft: #e7f6ec;
+
+    --warning: #f59e0b;
+    --danger: #dc2626;
+
+    --radius: 12px;
+    --shadow-sm: 0 1px 2px rgba(0,0,0,0.04);
+    --shadow-md: 0 6px 20px rgba(0,0,0,0.08);
+}
+
+/* =====================
+   GLOBAL
+===================== */
+* { box-sizing: border-box; }
+
 body {
     margin: 0;
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: #f4f6f8;
-    color: #333;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont;
+    background: var(--bg);
+    color: var(--text);
+    font-size: 15.5px;          /* ⬆ FONT SIZE */
+    line-height: 1.45;
 }
 
 a { text-decoration: none; color: inherit; }
 
-h2 { margin: 0; }
-
-/* ---------- TOP BAR ---------- */
+/* =====================
+   TOP NAVBAR
+===================== */
 .topbar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: linear-gradient(
+        180deg,
+        #ffffff 0%,
+        #f6f9ff 100%
+    );
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 12px 20px;
-    background: #ffffff;
-    border-bottom: 1px solid #ddd;
+    justify-content: space-between;
+    padding: 14px 28px;
 }
 
 .logo {
-    font-weight: 600;
-    font-size: 16px;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--primary);
 }
 
 .nav-links a {
-    margin-right: 16px;
-    font-weight: 500;
-    color: #333;
+    margin-right: 22px;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.nav-links a:hover {
+    color: var(--primary);
 }
 
 .nav-links .disabled {
-    color: #aaa;
+    color: #b7c0cc;
     cursor: not-allowed;
 }
 
 .user-box {
-    font-size: 14px;
+    font-size: 14.5px;
+    color: var(--muted);
 }
 
-/* ---------- PAGE ---------- */
+.user-box a {
+    margin-left: 14px;
+    color: var(--primary);
+    font-weight: 600;
+}
+
+/* =====================
+   PAGE LAYOUT
+===================== */
 .content {
-    padding: 20px;
+    padding: 22px;              /* ⬇ reduced spacing */
+    max-width: 1400px;
+    margin: auto;
 }
 
-/* ---------- CARDS ---------- */
+/* =====================
+   CARDS
+===================== */
 .card {
-    background: #fff;
-    border-radius: 6px;
-    padding: 16px;
-    margin-bottom: 16px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    background: var(--card);
+    border-radius: var(--radius);
+    padding: 16px 18px;         /* ⬇ tighter */
+    margin-bottom: 18px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border);
 }
 
-/* ---------- HEADER ROW ---------- */
+/* =====================
+   PAGE HEADER
+===================== */
 .page-header {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-between;
 }
 
-/* ---------- BUTTONS ---------- */
+.page-header h2 {
+    font-size: 23px;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+}
+
+/* =====================
+   BUTTONS
+===================== */
 .btn {
-    padding: 6px 14px;
-    border-radius: 16px;
-    font-size: 13px;
-    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 999px;
+    font-size: 13.5px;
+    font-weight: 600;
     border: none;
     cursor: pointer;
-    display: inline-block;
+    transition: all 0.15s ease;
 }
 
 .btn-primary {
-    background: #0d6efd;
+    background: linear-gradient(
+        180deg,
+        #3b82f6,
+        #2563eb
+    );
     color: #fff;
+}
+
+.btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 22px rgba(37,99,235,0.35);
 }
 
 .btn-secondary {
-    background: #6c757d;
-    color: #fff;
+    background: #edf1f7;
+    color: var(--text);
 }
 
-/* ---------- PILLS ---------- */
+.btn-secondary:hover {
+    background: #e3e9f2;
+}
+
+/* =====================
+   PILLS / BADGES
+===================== */
 .pill {
-    padding: 3px 10px;
-    border-radius: 12px;
-    font-size: 12px;
     display: inline-block;
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 12.5px;
+    font-weight: 600;
 }
 
-.pill-blue { background: #e7f1ff; color: #0d6efd; }
-.pill-green { background: #e6f4ea; color: #198754; }
-.pill-grey { background: #e9ecef; color: #495057; }
+.pill-blue {
+    background: var(--primary-soft);
+    color: var(--primary);
+}
 
-/* ---------- TABLE ---------- */
+.pill-green {
+    background: var(--success-soft);
+    color: var(--success);
+}
+
+.pill-grey {
+    background: #edf1f7;
+    color: var(--muted);
+}
+
+/* =====================
+   TABLE
+===================== */
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -102,42 +202,160 @@ h2 { margin: 0; }
 
 .table th {
     text-align: left;
-    font-size: 12px;
+    font-size: 12.5px;
+    font-weight: 700;
     text-transform: uppercase;
-    color: #666;
-    border-bottom: 1px solid #ddd;
-    padding: 8px;
+    color: var(--muted);
+    padding: 10px 10px;
+    border-bottom: 2px solid var(--border);
 }
 
 .table td {
-    padding: 8px;
-    border-bottom: 1px solid #eee;
-    font-size: 14px;
+    padding: 12px 10px;         /* ⬇ denser rows */
+    border-bottom: 1px solid var(--border);
+    font-size: 14.5px;
 }
 
-/* ---------- FORMS ---------- */
+.table tr:nth-child(even) {
+    background: var(--card-alt);
+}
+
+.table tr:hover {
+    background: #eef4ff;
+}
+
+/* =====================
+   FORMS
+===================== */
 .form-row {
-    margin-bottom: 12px;
+    margin-bottom: 14px;
 }
 
 label {
-    font-size: 13px;
-    color: #555;
     display: block;
-    margin-bottom: 4px;
+    font-size: 13.5px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--muted);
 }
 
 input, select {
     width: 100%;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    font-size: 14.5px;
+    background: #fff;
 }
 
+input:focus, select:focus {
+    outline: none;
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(37,99,235,0.15);
+}
+
+/* =====================
+   LOGIN
+===================== */
+.login-page {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(
+        180deg,
+        #eef2f7,
+        #e6ebf3
+    );
+}
+
+.login-card {
+    width: 380px;
+    padding: 34px;
+    background: var(--card);
+    border-radius: 18px;
+    box-shadow: var(--shadow-md);
+}
+
+.login-card h2 {
+    margin-bottom: 26px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.error {
+    margin-top: 12px;
+    color: var(--danger);
+    font-size: 13.5px;
+}
+
+/* =====================
+   ASSET MASTER – READABILITY BOOST
+===================== */
+
+/* Table base font increase */
+.table td {
+    font-size: 15.5px;   /* ⬆ from 14.5 */
+}
+
+/* Asset ID – compact but clear */
+.table td.asset-id {
+    font-weight: 600;
+    letter-spacing: 0.3px;
+}
+
+/* Asset Name – PRIMARY visual anchor */
+.table td.asset-name {
+    font-size: 16.5px;   /* ⬆ biggest text in row */
+    font-weight: 600;
+    line-height: 1.4;
+}
+
+/* Rotation number – subtle emphasis */
+.table td.asset-rotation {
+    font-weight: 600;
+}
+
+/* Status pill – slightly bigger */
 .pill {
-    border-radius: 20px;
+    font-size: 13px;
+    padding: 6px 16px;
 }
 
-.btn.pill {
-    border-radius: 20px;
+/* =====================
+   ACTION BUTTONS
+===================== */
+
+.btn-edit {
+    background: #edf1f7;
+    color: #1f2937;
+    font-weight: 600;
+    padding: 7px 16px;
+}
+
+.btn-edit:hover {
+    background: #e3e9f2;
+}
+
+/* =====================
+   ASSET MASTER – TABLE ALIGNMENT
+===================== */
+
+/* Center table headers except Name */
+.table th {
+    text-align: center;
+}
+
+.table th.name-col {
+    text-align: left;
+}
+
+/* Center table cells except Name */
+.table td {
+    text-align: center;
+}
+
+.table td.asset-name {
+    text-align: left;
 }
