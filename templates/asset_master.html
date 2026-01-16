@@ -1,81 +1,72 @@
 {% extends "base.html" %}
 {% block content %}
 
-<!-- ===== PAGE HEADER + ACTIONS ===== -->
+<!-- HEADER + ACTIONS -->
 <div class="card">
     <div class="page-header">
         <h2>Asset Master</h2>
 
         <div>
-            <a href="{{ url_for('asset_add') }}"
-               class="btn btn-primary pill">+ Add Asset</a>
-
-            <a href="{{ url_for('asset_import') }}"
-               class="btn btn-secondary pill">Import</a>
-
-            <a href="{{ url_for('asset_export') }}"
-               class="btn btn-secondary pill">Export</a>
+            <a href="{{ url_for('asset_add') }}" class="btn btn-primary">+ Add Asset</a>
+            <a href="{{ url_for('asset_import') }}" class="btn btn-secondary">Import</a>
+            <a href="{{ url_for('asset_export') }}" class="btn btn-secondary">Export</a>
         </div>
     </div>
 </div>
 
-<!-- ===== FILTERS ===== -->
+<!-- FILTERS -->
 <div class="card">
-    <form method="get">
-        <div style="display:flex; gap:12px; align-items:end;">
-
-            <div class="form-row" style="flex:2;">
-                <label>Search (Asset ID / Name)</label>
-                <input name="search" placeholder="Search asset">
-            </div>
-
-            <div class="form-row" style="flex:1;">
-                <label>Asset Type</label>
-                <select name="type">
-                    <option value="">All</option>
-                    <option>Machine</option>
-                    <option>Nut Runner</option>
-                    <option>Trolley</option>
-                    <option>Fixture</option>
-                </select>
-            </div>
-
-            <div class="form-row" style="flex:1;">
-                <label>Status</label>
-                <select name="status">
-                    <option value="">All</option>
-                    <option>Active</option>
-                    <option>Scrapped</option>
-                </select>
-            </div>
-
-            <div>
-                <button class="btn btn-primary pill">Apply</button>
-            </div>
-
+    <form method="get" style="display:flex; gap:16px; align-items:end;">
+        <div style="flex:2;">
+            <label>Search</label>
+            <input placeholder="Asset ID or Name">
         </div>
+
+        <div style="flex:1;">
+            <label>Asset Type</label>
+            <select>
+                <option>All</option>
+                <option>Machine</option>
+                <option>Nut Runner</option>
+                <option>Trolley</option>
+                <option>Fixture</option>
+            </select>
+        </div>
+
+        <div style="flex:1;">
+            <label>Status</label>
+            <select>
+                <option>All</option>
+                <option>Active</option>
+                <option>Scrapped</option>
+            </select>
+        </div>
+
+        <button class="btn btn-primary">Apply</button>
     </form>
 </div>
 
-<!-- ===== ASSET LIST ===== -->
+<!-- TABLE -->
 <div class="card">
     <table class="table">
         <thead>
             <tr>
                 <th>Asset ID</th>
-                <th>Asset Name</th>
+                <th class="name-col">Name</th>
                 <th>Type</th>
-                <th>Rotation Slot</th>
+                <th>Rotation</th>
                 <th>Status</th>
                 <th></th>
             </tr>
         </thead>
-
         <tbody>
         {% for a in assets %}
             <tr>
-                <td>{{ a.asset_id }}</td>
-                <td>{{ a.asset_name }}</td>
+                <td class="asset-id">{{ a.asset_id }}</td>
+
+                <td class="asset-name">
+                    {{ a.asset_name }}
+                </td>
 
                 <td>
                     <span class="pill pill-blue">
@@ -83,20 +74,20 @@
                     </span>
                 </td>
 
-                <td>{{ a.rotation_slot }}</td>
+                <td class="asset-rotation">
+                    {{ a.rotation_slot }}
+                </td>
 
                 <td>
-                    {% if a.status == "Active" %}
-                        <span class="pill pill-green">Active</span>
-                    {% else %}
-                        <span class="pill pill-grey">Scrapped</span>
-                    {% endif %}
+                    <span class="pill pill-green">
+                        {{ a.status }}
+                    </span>
                 </td>
 
                 <td>
                     <a href="{{ url_for('asset_edit', id=a.id) }}"
-                       class="btn btn-secondary pill">
-                        Edit
+                    class="btn btn-edit">
+                        Edit 
                     </a>
                 </td>
             </tr>
