@@ -133,3 +133,11 @@ input, select {
     border: 1px solid #ccc;
     border-radius: 4px;
 }
+
+.pill {
+    border-radius: 20px;
+}
+
+.btn.pill {
+    border-radius: 20px;
+}
