@@ -118,6 +118,28 @@ def asset_edit(id):
     conn.close()
     return render_template("asset_edit.html", asset=asset)
 
+# ---------------- ASSET MASTER ROUTES END ---------------- #
+
+# ---------------- IMPORT EXPORT ---------------- #
+
+@app.route("/asset-master/import", methods=["GET", "POST"])
+def asset_import():
+    if request.method == "POST":
+        # logic will be added later
+        flash("Import feature coming soon")
+        return redirect(url_for("asset_master"))
+
+    return render_template("asset_import.html")
+
+
+@app.route("/asset-master/export")
+def asset_export():
+    # export logic will be added later
+    flash("Export feature coming soon")
+    return redirect(url_for("asset_master"))
+
+# ---------------- IMPORT EXPORT ROUTES END---------------- #
+
 
 if __name__ == "__main__":
     init_db()
