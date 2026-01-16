@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- TOP BAR -->
+<div class="card page-header" style="display:flex; justify-content:space-between; align-items:center;">
+
+    <div style="display:flex; align-items:center; gap:12px;">
+        <a href="?week={{ week - 1 }}" class="btn btn-secondary">◀</a>
+
+        <div style="text-align:center;">
+            <div style="font-size:22px;font-weight:700;">
+                Week {{ week }}
+            </div>
+            <div style="font-size:13px;color:#6b7280;">
+                {{ calendar_label }}
+            </div>
+        </div>
+
+        <a href="?week={{ week + 1 }}" class="btn btn-secondary">▶</a>
+    </div>
+
+    <div style="display:flex; gap:10px;">
+        <a href="{{ url_for('pm_attendance_print', week=week) }}"
+           class="btn btn-secondary">Print</a>
+
+        {% if not entry_mode %}
+            <a href="{{ url_for('pm_attendance', week=week, entry=1) }}"
+               class="btn btn-primary">
+                Enter PM Attendance
+            </a>
+        {% else %}
+            <a href="{{ url_for('pm_attendance', week=week) }}"
+               class="btn btn-secondary">
+                Exit Entry Mode
+            </a>
+        {% endif %}
+    </div>
+</div>
+
+{% if recorded_on and not entry_mode %}
+<div class="card" style="font-size:13px;color:#374151;">
+    Attendance recorded on {{ recorded_on }}
+</div>
+{% endif %}
+
+<form method="post" action="{{ url_for('pm_attendance_save') }}">
+<input type="hidden" name="week" value="{{ week }}">
+
+<!-- BULK ACTIONS -->
+{% if entry_mode %}
+<div class="card">
+    <button type="button" class="btn btn-secondary" onclick="markAll('DONE')">
+        Mark All as DONE
+    </button>
+    <button type="button" class="btn btn-secondary" onclick="markAll('MISSED')">
+        Reset All
+    </button>
+</div>
+{% endif %}
+
+<!-- GRID -->
+<div class="card">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Asset ID</th>
+                <th class="name-col">Asset Name</th>
+                <th>Type</th>
+                <th>Group</th>
+                <th>PM Status</th>
+            </tr>
+        </thead>
+        <tbody>
+
+        {% for a in assets %}
+        {% set status = status_map.get(a.asset_id, 'NOT_MARKED') %}
+        <tr>
+            <td>{{ a.asset_id }}</td>
+
+            <td class="asset-name">
+                {{ a.asset_name }}
+            </td>
+
+            <td>
+                <span class="pill pill-blue">{{ a.asset_type }}</span>
+            </td>
+
+            <td>{{ a.rotation_slot }}</td>
+
+            <td>
+                {% if entry_mode %}
+                    <input type="hidden"
+                           name="status"
+                           value="{{ a.asset_id }}|{{ status }}"
+                           id="status-{{ a.asset_id }}">
+
+                    <span class="pill
+                        {% if status == 'DONE' %}pill-green{% elif status == 'MISSED' %}pill-red{% else %}pill-grey{% endif %}"
+                        style="cursor:pointer;"
+                        onclick="toggleStatus('{{ a.asset_id }}')"
+                        id="pill-{{ a.asset_id }}">
+                        {{ status.replace('_',' ') }}
+                    </span>
+                {% else %}
+                    <span class="pill
+                        {% if status == 'DONE' %}pill-green{% elif status == 'MISSED' %}pill-red{% else %}pill-grey{% endif %}">
+                        {{ status.replace('_',' ') }}
+                    </span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+
+<!-- SAVE -->
+{% if entry_mode %}
+<div style="display:flex; justify-content:flex-end; margin-top:16px;">
+    <button class="btn btn-primary">
+        Save Attendance
+    </button>
+</div>
+{% endif %}
+
+<script>
+function toggleStatus(assetId) {
+    const input = document.getElementById("status-" + assetId);
+    const pill = document.getElementById("pill-" + assetId);
+
+    let current = input.value.split("|")[1];
+    let next = current === "NOT_MARKED" ? "DONE" :
+               current === "DONE" ? "MISSED" : "DONE";
+
+    input.value = assetId + "|" + next;
+    pill.innerText = next.replace("_", " ");
+
+    pill.className = "pill " +
+        (next === "DONE" ? "pill-green" :
+         next === "MISSED" ? "pill-red" :
+         "pill-grey");
+}
+
+function markAll(value) {
+    document.querySelectorAll("input[name='status']").forEach(input => {
+        const assetId = input.value.split("|")[0];
+        input.value = assetId + "|" + value;
+
+        const pill = document.getElementById("pill-" + assetId);
+        pill.innerText = value;
+        pill.className = "pill " + (value === "DONE" ? "pill-green" : "pill-red");
+    });
+}
+</script>
+
+{% endblock %}
