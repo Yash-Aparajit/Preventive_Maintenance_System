@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="login-page">
+
+<form method="post" class="login-card">
+    <h2>PM_System Login</h2>
+    <input name="username" placeholder="Username" required>
+    <input name="password" type="password" placeholder="Password" required>
+    <button>Login</button>
+    {% for m in get_flashed_messages() %}
+        <p class="error">{{ m }}</p>
+    {% endfor %}
+</form>
+
+</body>
+</html>
