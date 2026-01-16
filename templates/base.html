@@ -8,14 +8,17 @@
 
 <nav class="topbar">
     <div class="logo">PM_System</div>
+
     <div class="nav-links">
         <a href="{{ url_for('index') }}">Dashboard</a>
         <a href="{{ url_for('asset_master') }}">Asset Master</a>
         <span class="disabled">PM Attendance</span>
         <span class="disabled">Missed PM</span>
     </div>
+
     <div class="user-box">
-        {{ session.user }} | <a href="{{ url_for('logout') }}">Logout</a>
+        {{ session.user }}
+        <a href="{{ url_for('logout') }}">Logout</a>
     </div>
 </nav>
 
