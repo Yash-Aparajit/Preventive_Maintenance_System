@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
+import sqlite3
+from datetime import datetime, date, timedelta
 from models import init_db, get_connection
 
 app = Flask(__name__)
@@ -6,10 +8,63 @@ app.secret_key = "pm_system_secret"
 
 # STATIC USERS
 USERS = {
-    "developer": {"password": "your password", "role": "developer"},
-    "user": {"password": "your password 2", "role": "maintenance"},
+    "developer": {"password": "dev@123@123", "role": "developer"},
+    "user": {"password": "user@jeena", "role": "maintenance"},
 }
 
+# ---------------- HELPER LOGIC ---------------- #
+
+def get_current_week_number():
+    # Continuous week count from a fixed reference date
+    reference = date(2024, 1, 1)  # arbitrary stable start
+    today = date.today()
+    delta_weeks = (today - reference).days // 7
+    return delta_weeks + 1
+
+
+def get_planned_assets_for_week(week_number):
+    conn = get_connection()
+
+    # Count active assets
+    total_assets = conn.execute(
+        "SELECT COUNT(*) FROM assets WHERE status = 'Active'"
+    ).fetchone()[0]
+
+    if total_assets == 0:
+        conn.close()
+        return []
+
+    groups = 4  # fixed groups
+    assets_per_group = (total_assets + groups - 1) // groups
+
+    group_index = (week_number - 1) % groups
+    start = group_index * assets_per_group
+    end = start + assets_per_group
+
+    assets = conn.execute(
+        """
+        SELECT * FROM assets
+        WHERE status = 'Active'
+        ORDER BY rotation_slot
+        LIMIT ? OFFSET ?
+        """,
+        (assets_per_group, start)
+    ).fetchall()
+
+    conn.close()
+    return assets
+
+def get_calendar_label_from_week(week_number):
+    reference = date(2024, 1, 1)
+    week_start = reference + timedelta(weeks=week_number - 1)
+
+    calendar_week = week_start.isocalendar().week
+    month = week_start.strftime("%b")
+    year = week_start.year
+
+    return f"W{calendar_week:02d} – {month} – {year}"
+
+# ---------------- END OF HELPER LOGIC ---------------- #
 
 @app.before_request
 def require_login():
@@ -138,8 +193,79 @@ def asset_export():
     flash("Export feature coming soon")
     return redirect(url_for("asset_master"))
 
+
 # ---------------- IMPORT EXPORT ROUTES END---------------- #
 
+
+# ---------------- PM WEEKLY ATTENDANCE ---------------- #
+
+@app.route("/pm-attendance")
+def pm_attendance():
+    week = request.args.get("week", type=int) or get_current_week_number()
+    entry_mode = request.args.get("entry") == "1"
+
+    assets = get_planned_assets_for_week(week)
+
+    conn = get_connection()
+    records = conn.execute(
+        "SELECT asset_id, status, recorded_on FROM pm_attendance WHERE week_number = ?",
+        (week,)
+    ).fetchall()
+    conn.close()
+
+    status_map = {r["asset_id"]: r["status"] for r in records}
+    recorded_on = records[0]["recorded_on"] if records else None
+
+    calendar_label = get_calendar_label_from_week(week)
+
+    return render_template(
+        "pm_attendance.html",
+        week=week,
+        calendar_label=calendar_label,
+        assets=assets,
+        status_map=status_map,
+        recorded_on=recorded_on,
+        entry_mode=entry_mode
+    )
+
+@app.route("/pm-attendance/save", methods=["POST"])
+def pm_attendance_save():
+    week = int(request.form["week"])
+    statuses = request.form.getlist("status")
+
+    now = datetime.now().strftime("%d/%m/%Y %H:%M")
+
+    conn = get_connection()
+    for entry in statuses:
+        asset_id, status = entry.split("|")
+        conn.execute(
+            """
+            INSERT OR REPLACE INTO pm_attendance
+            (asset_id, week_number, status, recorded_on)
+            VALUES (?, ?, ?, ?)
+            """,
+            (asset_id, week, status, now)
+        )
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for("pm_attendance", week=week))
+
+
+@app.route("/pm-attendance/print")
+def pm_attendance_print():
+    week = request.args.get("week", type=int)
+
+    assets = get_planned_assets_for_week(week)
+
+    return render_template(
+        "pm_print.html",
+        week=week,
+        assets=assets
+    )
+
+# ---------------- PM WEEKLY ATTENDANCE END ---------------- #
 
 if __name__ == "__main__":
     init_db()
