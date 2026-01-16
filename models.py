@@ -25,5 +25,18 @@ def init_db():
         )
     """)
 
+        # PM WEEKLY ATTENDANCE TABLE
+    cur.execute("""
+        CREATE TABLE IF NOT EXISTS pm_attendance (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            asset_id TEXT NOT NULL,
+            week_number INTEGER NOT NULL,
+            status TEXT CHECK(status IN ('DONE', 'MISSED')) NOT NULL,
+            recorded_on TEXT NOT NULL,
+            UNIQUE(asset_id, week_number)
+        )
+    """)
+
+
     conn.commit()
     conn.close()
