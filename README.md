@@ -4,7 +4,7 @@
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)
 ![Flask](https://img.shields.io/badge/Flask-Web%20App-black?logo=flask&logoColor=white)
 ![SQLite](https://img.shields.io/badge/Database-SQLite-blue?logo=sqlite&logoColor=white)
-![Status](https://img.shields.io/badge/Status-Active%20Development-success)
+![Status](https://img.shields.io/badge/Status-Work%20in%20Progress-yellow)
 
 PM_System is a lightweight **Preventive Maintenance tracking system** designed for real shopfloor execution.  
 It works like an **attendance sheet**: planned weekly PM workload is tracked as **DONE / MISSED**, with full traceable history and export-ready records.
