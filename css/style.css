@@ -239,13 +239,54 @@ label {
     color: var(--muted);
 }
 
-input, select {
+/* Apply input styles ONLY to text-like inputs */
+input:not([type="checkbox"]):not([type="radio"]),
+select,
+textarea {
     width: 100%;
-    padding: 10px 12px;
-    border-radius: 10px;
+    padding: 11px 14px;
+    border-radius: 12px;
     border: 1px solid var(--border);
-    font-size: 14.5px;
+    font-size: 15px;
+    font-family: inherit;
     background: #fff;
+    color: var(--text);
+    appearance: none;
+}
+
+/* =====================
+   CHECKBOX (FINDINGS)
+===================== */
+input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    border-radius: 6px;
+    cursor: pointer;
+    accent-color: var(--primary);
+}
+
+
+/* Dropdown normalization */
+select {
+    height: 44px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    background-image:
+        linear-gradient(45deg, transparent 50%, #6b7280 50%),
+        linear-gradient(135deg, #6b7280 50%, transparent 50%);
+    background-position:
+        calc(100% - 18px) 18px,
+        calc(100% - 12px) 18px;
+    background-size: 6px 6px, 6px 6px;
+    background-repeat: no-repeat;
+    padding-right: 36px;
+}
+
+textarea {
+    min-height: 110px;
+    resize: vertical;
+    line-height: 1.5;
 }
 
 input:focus, select:focus {
@@ -358,4 +399,47 @@ input:focus, select:focus {
 
 .table td.asset-name {
     text-align: left;
+}
+
+/* =====================
+   PRIMARY FORM ACTION
+===================== */
+.btn-primary.form-action {
+    padding: 12px 26px;
+    font-size: 15.5px;
+    font-weight: 700;
+    box-shadow: 0 10px 28px rgba(37,99,235,0.35);
+}
+
+.card {
+    animation: slideFade 0.18s ease-out;
+}
+
+@keyframes slideFade {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =====================
+   HISTORY PAGE SPACING
+===================== */
+
+/* Extra breathing room between filters and tables */
+.history-filters {
+    margin-bottom: 26px;
+}
+
+/* =====================
+   FILTER ACTION BUTTONS
+===================== */
+.btn-filter {
+    padding: 11px 22px;
+    font-size: 14.5px;
+    font-weight: 600;
 }
