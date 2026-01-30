@@ -8,8 +8,8 @@ app.secret_key = "pm_system_secret"
 
 # STATIC USERS
 USERS = {
-    "developer": {"password": "dev@123@123", "role": "developer"},
-    "user": {"password": "user@jeena", "role": "maintenance"},
+    "developer": {"password": "your password", "role": "developer"},
+    "user": {"password": "your password", "role": "user"},
 }
 
 # ---------------- HELPER LOGIC ---------------- #
