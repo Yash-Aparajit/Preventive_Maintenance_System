@@ -106,3 +106,15 @@ PM_System is designed to be:
 ### 1) Create virtual environment
 ```bash
 python -m venv venv
+
+### 2) Activate venv
+```bash
+venv\Scripts\activate
+
+### 3) Install dependencies
+```bash
+pip install -r requirements.txt
+
+### 4) Run the app
+```bash
+python app.py
