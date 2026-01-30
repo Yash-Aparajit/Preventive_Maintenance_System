@@ -205,3 +205,54 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+---
+
+## ✅ `.gitignore`
+
+```gitignore
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+
+# ---- Virtual Environment ----
+venv/
+.env/
+.venv/
+
+# ---- Flask ----
+instance/
+*.log
+
+# ---- Database / Local Data ----
+*.db
+*.sqlite
+*.sqlite3
+
+# ---- Uploads / Backups ----
+uploads/
+backups/
+
+# ---- IDE / Editor ----
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ---- OS Files ----
+.DS_Store
+Thumbs.db
+
+# ---- Secrets ----
+config.py
+secrets.py
+*.key
+*.pem
+
