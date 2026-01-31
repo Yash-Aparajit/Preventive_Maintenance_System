@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card page-header">
+    <h2>PM Findings</h2>
+</div>
+
+<div class="card">
+    <div style="font-weight:700; font-size:16px;">
+        {{ asset.asset_id }} – {{ asset.asset_name }}
+    </div>
+    <div style="color:#6b7280; margin-top:4px;">
+        Week {{ week }} • {{ asset.asset_type }}
+    </div>
+</div>
+
+<div class="card">
+<form method="post">
+
+    <label>Select Findings (tick what was observed)</label>
+
+    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:10px;">
+        {% for t in tags %}
+            <label style="display:flex; align-items:center; gap:10px; cursor:pointer; padding:6px 10px; border-radius:999px; background:#f3f6ff;">
+                <input type="checkbox" name="tags" value="{{ t.tag_code }}"
+                       {% if t.tag_code in existing_map %}checked{% endif %}>
+                <span class="pill pill-blue">{{ t.tag_label }}</span>
+            </label>
+        {% endfor %}
+    </div>
+
+    <div style="margin-top:18px;">
+        <label>Note (optional)</label>
+        <textarea name="note" placeholder="Short note (optional)">{{ existing_map.values()|list|first or '' }}</textarea>
+    </div>
+
+    <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:18px;">
+        <a href="{{ url_for('pm_attendance', week=week, entry=1) }}" class="btn btn-secondary btn-filter">Back</a>
+        <button class="btn btn-primary form-action">Save Findings</button>
+    </div>
+
+</form>
+</div>
+
+{% endblock %}
