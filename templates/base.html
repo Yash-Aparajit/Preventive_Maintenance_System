@@ -13,7 +13,8 @@
         <a href="{{ url_for('index') }}">Dashboard</a>
         <a href="{{ url_for('asset_master') }}">Asset Master</a>
         <a href="{{ url_for('pm_attendance') }}">PM Attendance</a>
-        <span class="disabled">Missed PM</span>
+        <a href="{{ url_for('attendance_history') }}">History</a>
+        <a href="{{ url_for('event_add') }}">Log Event</a>
     </div>
 
     <div class="user-box">
@@ -21,6 +22,14 @@
         <a href="{{ url_for('logout') }}">Logout</a>
     </div>
 </nav>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="card" style="background:#e7f6ec;color:#166534;">
+      {{ messages[0] }}
+    </div>
+  {% endif %}
+{% endwith %}
 
 <div class="content">
     {% block content %}{% endblock %}
