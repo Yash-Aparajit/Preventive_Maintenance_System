@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block content %}
+
+<!-- HEADER -->
+<div style="display:flex; gap:10px; margin-top:10px;">
+    <a href="{{ url_for('attendance_history') }}"
+       class="btn btn-primary">
+        Attendance
+    </a>
+
+    <a href="{{ url_for('findings_history') }}"
+       class="btn btn-secondary">
+        Findings
+    </a>
+
+    <a href="{{ url_for('events_history') }}"
+       class="btn btn-secondary">
+        Events
+    </a>
+</div>
+
+<!-- FILTERS -->
+<div class="card">
+    <form method="get" style="display:flex; gap:16px; align-items:end; flex-wrap:wrap;">
+
+        <div>
+            <label>From Date</label>
+            <input type="date" name="from_date" value="{{ filters.from_date }}">
+        </div>
+
+        <div>
+            <label>To Date</label>
+            <input type="date" name="to_date" value="{{ filters.to_date }}">
+        </div>
+
+        <div>
+            <label>Asset</label>
+            <select name="asset_id">
+                <option value="">All</option>
+                {% for a in assets %}
+                    <option value="{{ a.asset_id }}"
+                        {% if filters.asset_id == a.asset_id %}selected{% endif %}>
+                        {{ a.asset_id }} – {{ a.asset_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Status</label>
+            <select name="status">
+                <option value="">All</option>
+                <option value="DONE" {% if filters.status == 'DONE' %}selected{% endif %}>DONE</option>
+                <option value="MISSED" {% if filters.status == 'MISSED' %}selected{% endif %}>MISSED</option>
+            </select>
+        </div>
+
+        <div>
+            <button class="btn btn-primary btn-filter">Apply</button>
+            <a href="{{ url_for('attendance_history') }}" class="btn btn-secondary btn-filter">Reset</a>
+            <a href="{{ url_for('attendance_history_export') }}" class="btn btn-secondary btn-filter">
+                Export
+            </a>
+        </div>
+    </form>
+</div>
+<!-- TABLE -->
+<div class="card history-filters">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date & Time</th>
+                <th>Asset ID</th>
+                <th class="name-col">Asset Name</th>
+                <th>Attendance</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for r in records %}
+            <tr>
+                <td>{{ r.recorded_on }}</td>
+                <td>{{ r.asset_id }}</td>
+                <td class="asset-name">{{ r.asset_name }}</td>
+                <td>
+                    <span class="pill {% if r.status=='DONE' %}pill-green{% else %}pill-red{% endif %}">
+                        {{ r.status }}
+                    </span>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4" style="text-align:center;color:#6b7280;">
+                    No attendance records found
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
