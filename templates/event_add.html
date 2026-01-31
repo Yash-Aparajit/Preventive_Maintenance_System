@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="card page-header">
+    <h2>Log Event</h2>
+</div>
+
+<div class="card">
+<form method="post">
+
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+
+        <div>
+            <label>Asset</label>
+            <select name="asset_id" required>
+                <option value="">Select Asset</option>
+                {% for a in assets %}
+                    <option value="{{ a.asset_id }}">
+                        {{ a.asset_id }} – {{ a.asset_name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div>
+            <label>Event Type</label>
+            <select name="event_type" id="eventType" required onchange="toggleSubtype()">
+                <option value="">Select Type</option>
+                <option>Breakdown</option>
+                <option>Repair</option>
+                <option>PM Action</option>
+                <option>Modification</option>
+                <option>Cost</option>
+                <option>Other</option>
+            </select>
+        </div>
+
+        <div id="subtypeBox" style="display:none;">
+            <label>Specify (Other)</label>
+            <input name="event_subtype" placeholder="Describe event type">
+        </div>
+
+        <div>
+            <label>Cost (optional)</label>
+            <input type="number" step="0.01" name="cost">
+        </div>
+
+    </div>
+
+    <div style="margin-top:16px;">
+        <label>Description</label>
+        <textarea name="description" rows="4" required></textarea>
+    </div>
+
+    <div style="margin-top:16px;">
+        <label>Name / Reference (optional)</label>
+        <input name="name" placeholder="Vendor, technician, ref no.">
+    </div>
+
+    <div style="margin-top:24px; text-align:right;">
+        <button class="btn btn-primary form-action">
+            Save Event
+        </button>
+    </div>
+
+</form>
+</div>
+
+<script>
+function toggleSubtype() {
+    const type = document.getElementById("eventType").value;
+    document.getElementById("subtypeBox").style.display =
+        type === "Other" ? "block" : "none";
+}
+</script>
+
+{% endblock %}
